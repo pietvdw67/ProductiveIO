@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.infinity.ProductiveIO.dailyHistory.model.HistoryItem;
+import com.infinity.ProductiveIO.dailyHistory.model.HistoryItemView;
 import com.infinity.ProductiveIO.dailyHistory.repository.DailyHistoryRepository;
 import com.infinity.ProductiveIO.dailyHistory.service.DailyHistoryReportService;
+import com.infinity.ProductiveIO.dailyHistory.service.HistoryService;
 
 @RestController
 public class DailyHistoryResource {
@@ -29,16 +31,20 @@ public class DailyHistoryResource {
 	@Autowired
 	DailyHistoryRepository repository;	
 	
+	@Autowired
+	HistoryService historyService;
+	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/dailyhistory/v1/{machineid}")
-	public List<HistoryItem> getDailyHistoryPerMachine(@PathVariable String machineid) {
+	public List<HistoryItemView> getDailyHistoryPerMachine(@PathVariable String machineid) {
 		
-		return repository.findByMachineId(Integer.parseInt(machineid));
+		List<HistoryItem> historyItems = repository.findByMachineId(Integer.parseInt(machineid));
+		return historyService.historyItemToHistoryItemView(historyItems);
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/dailyhistoryByDate/v1/{countdate}")
-	public List<HistoryItem> getDailyHistoryByDate(@PathVariable String countdate) {
+	public List<HistoryItemView> getDailyHistoryByDate(@PathVariable String countdate) {
 		
 		LocalDate ld;
 		
@@ -50,7 +56,8 @@ public class DailyHistoryResource {
 		
 		java.sql.Date countdateFormatted = new java.sql.Date(ld.atStartOfDay().toInstant(ZoneOffset.ofHours(2)).toEpochMilli());
 		
-		return repository.findByDate(countdateFormatted);
+		List<HistoryItem> historyItems =  repository.findByDate(countdateFormatted);
+		return historyService.historyItemToHistoryItemView(historyItems);
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")	
