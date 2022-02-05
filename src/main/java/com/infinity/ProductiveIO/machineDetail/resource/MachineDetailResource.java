@@ -3,9 +3,9 @@ package com.infinity.ProductiveIO.machineDetail.resource;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.hibernate.annotations.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,9 +40,15 @@ public class MachineDetailResource {
 	@PostMapping("/machinedetails/v1")
 	public MachineDetail addMachineDetail(@RequestBody MachineDetail machineDetail) {
 		
-		logger.info("machine detail : " + machineDetail);
-		
 		return repository.save(machineDetail);
+		
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@DeleteMapping("/machinedetails/v1/{id}")
+	public void delteMachineDetail(@PathVariable String id) {
+		
+		repository.deleteById(Long.parseLong(id));
 		
 	}
 
