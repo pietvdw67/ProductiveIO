@@ -13,8 +13,8 @@ public class DailyHistoryReportService {
 	
 	public void buildReport() {
 		ReportBuilder reportBuilder = new ReportBuilder();
-		reportBuilder.setReportName("Daily History");
-		reportBuilder.setOutputFileName("DailyHistory.xlsx");
+		reportBuilder.setReportName("History");
+		reportBuilder.setOutputFileName("History.xlsx");
 		
 		List<ReportColumns> reportColumns = new ArrayList<>();
 		

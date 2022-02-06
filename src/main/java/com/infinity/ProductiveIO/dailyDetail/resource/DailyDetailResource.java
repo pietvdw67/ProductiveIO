@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.infinity.ProductiveIO.dailyDetail.repository.DailyDetailRepository;
 import com.infinity.ProductiveIO.dailyDetail.service.DailyDetailReportService;
+import com.infinity.ProductiveIO.dailyDetail.service.DetailService;
 import com.infinity.ProductiveIO.dailyTotal.resource.DailyTotalResource;
 import com.infinity.ProductiveIO.model.ItemDetail;
+import com.infinity.ProductiveIO.model.ItemDetailView;
 
 @RestController
 public class DailyDetailResource {
@@ -30,51 +32,34 @@ public class DailyDetailResource {
 	@Autowired
 	DailyDetailRepository repository;
 	
+	@Autowired
+	DetailService detailService;
+	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/dailydetail/v1/{countdate}/{machineid}")
-	public List<ItemDetail> getDailyDetailsPerMachine(@PathVariable String countdate,@PathVariable String machineid) {
+	public List<ItemDetailView> getDailyDetailsPerMachine(@PathVariable String countdate,@PathVariable String machineid) {
 		
 		LocalDate ld = LocalDate.parse(countdate,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		java.sql.Date countdateFormatted = new java.sql.Date(ld.atStartOfDay().toInstant(ZoneOffset.ofHours(2)).toEpochMilli());
 		
-		return repository.findByDateAndMachine(countdateFormatted, Integer.parseInt(machineid));
-	}
+		List<ItemDetail> detailItems = repository.findByDateAndMachine(countdateFormatted, Integer.parseInt(machineid));
+		return detailService.ItemDetailToItemDetailView(detailItems);
+		
+		
+	}	
 	
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("/dailydetail/buildReport/v1/{countdate}/{machineid}")
-	public void buildDailyDetailReport(@PathVariable String countdate,@PathVariable String machineid) {
-		
-		List<ItemDetail> itemDetails = getDailyDetailsPerMachine(countdate,machineid);
-		DailyDetailReportService dailyDetailReportService = new DailyDetailReportService();
-		dailyDetailReportService.setItemDetails(itemDetails);
-		dailyDetailReportService.buildReport();		
-	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("/dailydetail/downloadReport/v1")
-	public void downloadInterimReport(HttpServletResponse res) throws Exception {
-		File currDir = new File(".");
-		String path = currDir.getAbsolutePath();
-		String fileName = path.substring(0, path.length() - 1) + "reports\\DailyDetail.xlsx";
-		logger.info(fileName);
-		
-		res.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-		res.getOutputStream().write(contentOf(fileName));
-		
-	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("/dailydetail/downloadReport/v2/{countdate}/{machineid}")
+	@GetMapping("/dailydetail/downloadReport/v1/{countdate}/{machineid}")
 	public void downloadInterimReportc2(HttpServletResponse res,@PathVariable String countdate,@PathVariable String machineid) throws Exception {
 		
-		List<ItemDetail> itemDetails = getDailyDetailsPerMachine(countdate,machineid);
+		List<ItemDetailView> itemDetailViews = getDailyDetailsPerMachine(countdate,machineid);
 		DailyDetailReportService dailyDetailReportService = new DailyDetailReportService();
-		dailyDetailReportService.setItemDetails(itemDetails);
+		dailyDetailReportService.setItemDetails(itemDetailViews);
 		dailyDetailReportService.buildReport();
 		
 		File currDir = new File(".");
 		String path = currDir.getAbsolutePath();
-		String fileName = path.substring(0, path.length() - 1) + "reports\\DailyDetail.xlsx";
+		String fileName = path.substring(0, path.length() - 1) + "reports\\Detail.xlsx";
 		logger.info(fileName);
 		
 		res.setHeader("Content-Disposition", "attachment;filename=" + fileName);

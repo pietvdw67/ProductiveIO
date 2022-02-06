@@ -3,36 +3,36 @@ package com.infinity.ProductiveIO.dailyDetail.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.infinity.ProductiveIO.model.ItemDetail;
+import com.infinity.ProductiveIO.model.ItemDetailView;
 import com.infinity.ProductiveIO.report.model.ReportColumns;
 import com.infinity.ProductiveIO.report.service.ReportBuilder;
 
 public class DailyDetailReportService {
-	private List<ItemDetail> itemDetails;
+	private List<ItemDetailView> itemDetailViews;
 
 	public void buildReport() {
 		ReportBuilder reportBuilder = new ReportBuilder();
-		reportBuilder.setReportName("Daily Detail");
-		reportBuilder.setOutputFileName("DailyDetail.xlsx");
+		reportBuilder.setReportName("Detail");
+		reportBuilder.setOutputFileName("Detail.xlsx");
 		
 		List<ReportColumns> reportColumns = new ArrayList<>();
 		
-		reportColumns.add(new ReportColumns("Machine Id","machineid"));
+		reportColumns.add(new ReportColumns("Machine Name",8000,"machinename",ReportColumns.CellType.STRING));
 		reportColumns.add(new ReportColumns("Date","countdate",ReportColumns.CellType.DATE));
 		reportColumns.add(new ReportColumns("Time","counttime",ReportColumns.CellType.TIME));		
 		reportColumns.add(new ReportColumns("Count","countamount"));
 		reportBuilder.setReportColumns(reportColumns);
-		reportBuilder.setValues(itemDetails);
+		reportBuilder.setValues(itemDetailViews);
 		
 		reportBuilder.buildReport();
 	}
 
-	public List<ItemDetail> getItemDetails() {
-		return itemDetails;
+	public List<ItemDetailView> getItemDetailViews() {
+		return itemDetailViews;
 	}
 
-	public void setItemDetails(List<ItemDetail> itemDetails) {
-		this.itemDetails = itemDetails;
+	public void setItemDetails(List<ItemDetailView> itemDetailViews) {
+		this.itemDetailViews = itemDetailViews;
 	}
 
 }
