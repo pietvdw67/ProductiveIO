@@ -40,6 +40,8 @@ public class MachineDetailResource {
 	@PostMapping("/machinedetails/v1")
 	public MachineDetail addMachineDetail(@RequestBody MachineDetail machineDetail) {
 		
+		logger.info("MachineDetails : " + machineDetail);
+		
 		return repository.save(machineDetail);
 		
 	}

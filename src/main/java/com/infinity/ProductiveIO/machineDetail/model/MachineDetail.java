@@ -10,6 +10,8 @@ public class MachineDetail {
 	
 	private long id;
 	private String name;
+	private Integer averageval;
+	private Integer marginval;
 	
 	@Id	
 	public long getId() {
@@ -23,17 +25,25 @@ public class MachineDetail {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}	
+	public Integer getAverageval() {
+		return averageval;
 	}
+	public void setAverageval(Integer averageval) {
+		this.averageval = averageval;
+	}
+	public Integer getMarginval() {
+		return marginval;
+	}
+	public void setMarginval(Integer marginval) {
+		this.marginval = marginval;
+	}
+	
 	@Override
 	public String toString() {
-		return "MachineDetail [id=" + id + ", name=" + name + "]";
+		return "MachineDetail [id=" + id + ", name=" + name + ", averageval=" + averageval + ", marginval=" + marginval
+				+ "]";
 	}
-	
-	
-	
-
-
-	
 	
 
 }
