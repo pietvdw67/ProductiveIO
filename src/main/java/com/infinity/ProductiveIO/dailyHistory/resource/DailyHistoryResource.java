@@ -60,36 +60,13 @@ public class DailyHistoryResource {
 		return historyService.historyItemToHistoryItemView(historyItems);
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")	
-	@GetMapping("/dailyhistory/buildReport/v1/{machineid}")
-	public void buildDailyHistoryReport(@PathVariable String machineid) {
-		
-		List<HistoryItem> historyItems = repository.findByMachineId(Integer.parseInt(machineid));
-		DailyHistoryReportService dailyHistoryReportService = new DailyHistoryReportService();
-		dailyHistoryReportService.setHistoryItems(historyItems);
-		dailyHistoryReportService.buildReport();		
-	}
-	
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("/dailyhistory/downloadReport/v1")
-	public void downloadInterimReport(HttpServletResponse res) throws Exception {
-		File currDir = new File(".");
-		String path = currDir.getAbsolutePath();
-		String fileName = path.substring(0, path.length() - 1) + "reports\\DailyHistory.xlsx";
-		logger.info(fileName);
-		
-		res.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-		res.getOutputStream().write(contentOf(fileName));
-		
-	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("/dailyhistory/downloadReport/v2/{machineid}")
+	@GetMapping("/dailyhistory/downloadReport/v1/{machineid}")
 	public void downloadInterimReportV2(HttpServletResponse res,@PathVariable String machineid) throws Exception {
 		
 		List<HistoryItem> historyItems = repository.findByMachineId(Integer.parseInt(machineid));
 		DailyHistoryReportService dailyHistoryReportService = new DailyHistoryReportService();
-		dailyHistoryReportService.setHistoryItems(historyItems);
+		dailyHistoryReportService.setHistoryItemsView(historyService.historyItemToHistoryItemView(historyItems));
 		dailyHistoryReportService.buildReport();
 		
 		File currDir = new File(".");
@@ -107,9 +84,9 @@ public class DailyHistoryResource {
 	@GetMapping("/dailyhistory/downloadByDateReport/v1/{countdate}")
 	public void downloadByDateReportV1(HttpServletResponse res,@PathVariable String countdate) throws Exception {
 		
-		List<HistoryItem> historyItems = getDailyHistoryByDate(countdate);		
+		List<HistoryItemView> historyItemsView = getDailyHistoryByDate(countdate);		
 		DailyHistoryReportService dailyHistoryReportService = new DailyHistoryReportService();
-		dailyHistoryReportService.setHistoryItems(historyItems);
+		dailyHistoryReportService.setHistoryItemsView(historyItemsView);
 		dailyHistoryReportService.buildReport();
 		
 		File currDir = new File(".");
