@@ -12,6 +12,8 @@ public class MachineDetail {
 	private String name;
 	private Integer averageval;
 	private Integer marginval;
+	private Integer goalamt;
+	private Integer uploadmin;
 	
 	@Id	
 	public long getId() {
@@ -38,12 +40,23 @@ public class MachineDetail {
 	public void setMarginval(Integer marginval) {
 		this.marginval = marginval;
 	}
+	public Integer getGoalamt() {
+		return goalamt;
+	}
+	public void setGoalamt(Integer goalamt) {
+		this.goalamt = goalamt;
+	}
+	public Integer getUploadmin() {
+		return uploadmin;
+	}
+	public void setUploadmin(Integer uploadmin) {
+		this.uploadmin = uploadmin;
+	}
 	
 	@Override
 	public String toString() {
 		return "MachineDetail [id=" + id + ", name=" + name + ", averageval=" + averageval + ", marginval=" + marginval
-				+ "]";
-	}
-	
+				+ ", goalamt=" + goalamt + ", uploadmin=" + uploadmin + "]";
+	}	
 
 }

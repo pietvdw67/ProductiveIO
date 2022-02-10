@@ -2,10 +2,13 @@ package com.infinity.ProductiveIO.scedule.service;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.infinity.ProductiveIO.dailyHistory.model.HistoryItem;
+import com.infinity.ProductiveIO.machineDetail.model.MachineDetail;
 import com.infinity.ProductiveIO.model.ItemDetail;
 import com.infinity.ProductiveIO.scedule.model.RepositoryInstance;
 
@@ -34,6 +37,34 @@ public class TotalHistoryPopulatorSchedule implements Runnable {
 			
 			RepositoryInstance.getInstance().getDailyHistoryRepository().save(historyItem);			
 		});
+		
+		// Get averages
+		Map<Long,Integer> averages = new HashMap<>();
+		RepositoryInstance.getInstance().getJdbcTemplate().query("select machineid,avg(countamount) as average from dailydetail where countdate = '" + yesterdayFormatted +"' and countamount > 0 group by machineid", (rs) -> {			
+			averages.put(rs.getLong("machineid"),(int)rs.getDouble("average"));
+		});
+		
+		
+		
+		
+		
+		// populate averages into machine details
+		List<MachineDetail> machineDetails = RepositoryInstance.getInstance().getMachineDetailRepository().findAll();
+		machineDetails.forEach(machineDetail -> {
+			if (averages.containsKey(machineDetail.getId())){
+				machineDetail.setAverageval(averages.get(machineDetail.getId()));
+				
+				RepositoryInstance.getInstance().getMachineDetailRepository().save(machineDetail);
+			} 				
+				
+		});
+
+		
+		
+		
+		
+
+
 		
 	}
 

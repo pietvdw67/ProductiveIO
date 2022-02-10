@@ -1,9 +1,10 @@
 package com.infinity.ProductiveIO.scedule.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.infinity.ProductiveIO.dailyDetail.repository.DailyDetailRepository;
 import com.infinity.ProductiveIO.dailyHistory.repository.DailyHistoryRepository;
+import com.infinity.ProductiveIO.machineDetail.repository.MachineDetailRepository;
 import com.infinity.ProductiveIO.scedule.repository.ScheduleRepository;
 
 public class RepositoryInstance {
@@ -12,6 +13,8 @@ public class RepositoryInstance {
 	private ScheduleRepository scheduleRepository;
 	private DailyDetailRepository dailyDetailRepository;	
 	private DailyHistoryRepository dailyHistoryRepository;
+	private MachineDetailRepository machineDetailRepository;
+	private JdbcTemplate jdbcTemplate;
 	
 	private RepositoryInstance() {}
 	
@@ -45,6 +48,22 @@ public class RepositoryInstance {
 
 	public void setDailyHistoryRepository(DailyHistoryRepository dailyHistoryRepository) {
 		this.dailyHistoryRepository = dailyHistoryRepository;
+	}
+
+	public MachineDetailRepository getMachineDetailRepository() {
+		return machineDetailRepository;
+	}
+
+	public void setMachineDetailRepository(MachineDetailRepository machineDetailRepository) {
+		this.machineDetailRepository = machineDetailRepository;
+	}
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 
