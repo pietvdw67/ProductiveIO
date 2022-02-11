@@ -13,7 +13,7 @@ public class MachineEmulateCommandLineRunner implements CommandLineRunner {
 	@Autowired
 	DailyDetailRepository repository;
 	
-	private static final boolean DO_RUN = true;
+	private static final boolean DO_RUN = false;
 	
 	@Override
 	public void run(String... args) throws Exception {
