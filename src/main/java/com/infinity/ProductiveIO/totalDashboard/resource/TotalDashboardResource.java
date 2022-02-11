@@ -20,8 +20,9 @@ public class TotalDashboardResource {
 	Logger logger = Logger.getLogger(TotalDashboardResource.class.toString());
 		
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("/totalDashboard/v1/")
+	@GetMapping("/totalDashboard/v1")
 	public List<TotalDashboardItem> getTotalDashboard(){
+				
 		return service.getTotalDashboard();
 	}
 

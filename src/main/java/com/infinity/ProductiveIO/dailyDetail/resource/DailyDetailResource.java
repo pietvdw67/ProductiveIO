@@ -39,8 +39,14 @@ public class DailyDetailResource {
 	@GetMapping("/dailydetail/v1/{countdate}/{machineid}")
 	public List<ItemDetailView> getDailyDetailsPerMachine(@PathVariable String countdate,@PathVariable String machineid) {
 		
-		LocalDate ld = LocalDate.parse(countdate,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		java.sql.Date countdateFormatted = new java.sql.Date(ld.atStartOfDay().toInstant(ZoneOffset.ofHours(2)).toEpochMilli());
+		java.sql.Date countdateFormatted;
+		
+		if ( countdate.equalsIgnoreCase("today")) {
+			countdateFormatted =  new java.sql.Date(LocalDate.now().atStartOfDay().toInstant(ZoneOffset.ofHours(2)).toEpochMilli());
+		} else {
+			LocalDate ld = LocalDate.parse(countdate,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			countdateFormatted = new java.sql.Date(ld.atStartOfDay().toInstant(ZoneOffset.ofHours(2)).toEpochMilli());
+		}
 		
 		List<ItemDetail> detailItems = repository.findByDateAndMachine(countdateFormatted, Integer.parseInt(machineid));
 		return detailService.ItemDetailToItemDetailView(detailItems);
