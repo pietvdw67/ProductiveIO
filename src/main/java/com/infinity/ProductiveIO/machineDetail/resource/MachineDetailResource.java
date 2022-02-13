@@ -1,6 +1,7 @@
 package com.infinity.ProductiveIO.machineDetail.resource;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,20 @@ public class MachineDetailResource {
 		repository.deleteById(Long.parseLong(id));
 		
 	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/machinedetails/uploadmin/v1/{id}")
+	public int getMachineUploadMin(@PathVariable String id) {
+		
+		MachineDetail machineDetail = repository.findById(Long.parseLong(id)).orElse(null);
+		
+		if (Objects.isNull(machineDetail) || Objects.isNull(machineDetail.getUploadmin())) {
+			return 0;
+		} else {
+			return machineDetail.getUploadmin();
+		}
+		
+	}
+	
 
 }

@@ -10,6 +10,7 @@ public class TotalDashboardItem {
 	private int average;
 	private int margin;
 	private int productionPersentage;
+	private String operatorName;
 	
 	public long getId() {
 		return id;
@@ -59,6 +60,18 @@ public class TotalDashboardItem {
 	public void setLastUpdateAmount(int lastUpdateAmount) {
 		this.lastUpdateAmount = lastUpdateAmount;
 	}
+	public String getOperatorName() {
+		return operatorName;
+	}
+	public void setOperatorName(String operatorName) {
+		this.operatorName = operatorName;
+	}
 	
-
+	@Override
+	public String toString() {
+		return "TotalDashboardItem [id=" + id + ", machineName=" + machineName + ", lastUpdate=" + lastUpdate
+				+ ", totalForDay=" + totalForDay + ", lastUpdateAmount=" + lastUpdateAmount + ", average=" + average
+				+ ", margin=" + margin + ", productionPersentage=" + productionPersentage + ", operatorName="
+				+ operatorName + "]";
+	}
 }

@@ -14,6 +14,7 @@ public class MachineDetail {
 	private Integer marginval;
 	private Integer goalamt;
 	private Integer uploadmin;
+	private Long note;
 	
 	@Id	
 	public long getId() {
@@ -52,11 +53,20 @@ public class MachineDetail {
 	public void setUploadmin(Integer uploadmin) {
 		this.uploadmin = uploadmin;
 	}
-	
+	public Long getNote() {
+		return note;
+	}
+	public void setNote(Long note) {
+		this.note = note;
+	}
 	@Override
 	public String toString() {
 		return "MachineDetail [id=" + id + ", name=" + name + ", averageval=" + averageval + ", marginval=" + marginval
-				+ ", goalamt=" + goalamt + ", uploadmin=" + uploadmin + "]";
-	}	
+				+ ", goalamt=" + goalamt + ", uploadmin=" + uploadmin + ", operator=" + operator + ", note=" + note
+				+ "]";
+	}
+	
+	
+
 
 }

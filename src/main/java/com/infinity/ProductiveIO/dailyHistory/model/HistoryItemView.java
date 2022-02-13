@@ -7,6 +7,8 @@ public class HistoryItemView {
 	private String machinename;
 	private java.sql.Date countdate;
 	private int countamount;
+	private String operatorname;
+	private String notetext;
 	
 	public long getId() {
 		return id;
@@ -38,7 +40,25 @@ public class HistoryItemView {
 	public void setCountamount(int countamount) {
 		this.countamount = countamount;
 	}
+	public String getOperatorname() {
+		return operatorname;
+	}
+	public void setOperatorname(String operatorname) {
+		this.operatorname = operatorname;
+	}
+	public String getNotetext() {
+		return notetext;
+	}
+	public void setNotetext(String notetext) {
+		this.notetext = notetext;
+	}
 	
+	@Override
+	public String toString() {
+		return "HistoryItemView [id=" + id + ", machineid=" + machineid + ", machinename=" + machinename
+				+ ", countdate=" + countdate + ", countamount=" + countamount + ", operatorname=" + operatorname
+				+ ", notetext=" + notetext + "]";
+	}
 	
 
 }

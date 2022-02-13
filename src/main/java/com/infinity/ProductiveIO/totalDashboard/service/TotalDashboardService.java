@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ import com.infinity.ProductiveIO.dailyDetail.repository.DailyDetailRepository;
 import com.infinity.ProductiveIO.machineDetail.model.MachineDetail;
 import com.infinity.ProductiveIO.machineDetail.service.MachineDetailService;
 import com.infinity.ProductiveIO.model.ItemDetail;
+import com.infinity.ProductiveIO.operator.model.OperatorItem;
+import com.infinity.ProductiveIO.operator.repository.OperatorRepository;
 import com.infinity.ProductiveIO.totalDashboard.dto.TotalDashboardJDBC;
 import com.infinity.ProductiveIO.totalDashboard.model.TotalDashboardItem;
 
@@ -25,6 +28,9 @@ public class TotalDashboardService {
 	MachineDetailService machineDetailService;
 	
 	@Autowired
+	OperatorRepository operatorRepository;
+	
+	@Autowired
 	TotalDashboardJDBC jdbc;
 	
 	public List<TotalDashboardItem> getTotalDashboard(){
@@ -33,6 +39,7 @@ public class TotalDashboardService {
 		List<ItemDetail> itemTotals = dailyDetailRepository.findTotalPerDay(new java.sql.Date(System.currentTimeMillis()));
 		
 		Map<Long,MachineDetail> machineDetailsMap = machineDetailService.getMachineDetailsMap();
+		List<OperatorItem> operatorsList = operatorRepository.findAll();
 		
 		for (ItemDetail itemDetail : itemTotals) {
 			TotalDashboardItem totalDashboardItem = new TotalDashboardItem();
@@ -69,7 +76,14 @@ public class TotalDashboardService {
 			int lastUploadAmount = jdbc.lastUploadAmount(itemDetail.getId());
 			totalDashboardItem.setLastUpdateAmount(lastUploadAmount);
 			
-			totalDashboardItem.setProductionPersentage((int) totalDashboardItem.getLastUpdateAmount() * 100 / totalDashboardItem.getAverage());			
+			totalDashboardItem.setProductionPersentage((int) totalDashboardItem.getLastUpdateAmount() * 100 / totalDashboardItem.getAverage());	
+			
+			Optional<OperatorItem> operatorItemOptional = operatorsList.stream().filter(operator -> operator.getMachineid() == itemDetail.getId()).findFirst();
+			if (operatorItemOptional.isPresent()) {
+				totalDashboardItem.setOperatorName(operatorItemOptional.get().getOperatorname());
+			} else {
+				totalDashboardItem.setOperatorName("Not Set");
+			}
 			
 			totalDashboardItems.add(totalDashboardItem);
 			
