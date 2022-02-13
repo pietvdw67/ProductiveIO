@@ -91,7 +91,7 @@ public class DailyHistoryResource {
 		
 		File currDir = new File(".");
 		String path = currDir.getAbsolutePath();
-		String fileName = path.substring(0, path.length() - 1) + "reports\\DailyHistory.xlsx";
+		String fileName = path.substring(0, path.length() - 1) + "reports\\History.xlsx";
 		logger.info(fileName);
 		
 		res.setHeader("Content-Disposition", "attachment;filename=" + fileName);
