@@ -69,7 +69,11 @@ public class TotalDashboardService {
 			int lastUploadAmount = jdbc.lastUploadAmount(itemDetail.getId());
 			totalDashboardItem.setLastUpdateAmount(lastUploadAmount);
 			
-			totalDashboardItem.setProductionPersentage((int) totalDashboardItem.getLastUpdateAmount() * 100 / totalDashboardItem.getAverage());			
+			if (totalDashboardItem.getAverage() > 0) {
+				totalDashboardItem.setProductionPersentage((int) totalDashboardItem.getLastUpdateAmount() * 100 / totalDashboardItem.getAverage());
+			} else {
+				totalDashboardItem.setProductionPersentage(0);
+			}
 			
 			totalDashboardItems.add(totalDashboardItem);
 			
