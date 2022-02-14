@@ -1,10 +1,12 @@
 package com.infinity.ProductiveIO.scedule.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.infinity.ProductiveIO.dailyDetail.repository.DailyDetailRepository;
 import com.infinity.ProductiveIO.dailyHistory.repository.DailyHistoryRepository;
 import com.infinity.ProductiveIO.machineDetail.repository.MachineDetailRepository;
+import com.infinity.ProductiveIO.operator.repository.OperatorRepository;
 import com.infinity.ProductiveIO.scedule.repository.ScheduleRepository;
 
 public class RepositoryInstance {
@@ -14,6 +16,7 @@ public class RepositoryInstance {
 	private DailyDetailRepository dailyDetailRepository;	
 	private DailyHistoryRepository dailyHistoryRepository;
 	private MachineDetailRepository machineDetailRepository;
+	private OperatorRepository operatorRepository;
 	private JdbcTemplate jdbcTemplate;
 	
 	private RepositoryInstance() {}
@@ -65,6 +68,13 @@ public class RepositoryInstance {
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-	
+
+	public OperatorRepository getOperatorRepository() {
+		return operatorRepository;
+	}
+
+	public void setOperatorRepository(OperatorRepository operatorRepository) {
+		this.operatorRepository = operatorRepository;
+	}
 
 }

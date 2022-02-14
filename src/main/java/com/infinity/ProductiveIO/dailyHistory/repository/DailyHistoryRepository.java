@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.infinity.ProductiveIO.dailyHistory.model.HistoryItem;
+import com.infinity.ProductiveIO.model.ItemDetail;
 
 public interface DailyHistoryRepository extends JpaRepository<HistoryItem,Long> {
 	

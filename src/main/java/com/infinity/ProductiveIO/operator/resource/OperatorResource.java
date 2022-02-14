@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.infinity.ProductiveIO.operator.model.OperatorItem;
 import com.infinity.ProductiveIO.operator.repository.OperatorRepository;
+import com.infinity.ProductiveIO.operator.service.OperatorService;
 
 @RestController
 public class OperatorResource {
 	
 	@Autowired
 	OperatorRepository repository;
+	
+	@Autowired
+	OperatorService operatorService;
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/operator/v1")
@@ -37,6 +41,9 @@ public class OperatorResource {
 	@PostMapping("/operator/v1")
 	public OperatorItem addOperator(@RequestBody OperatorItem operatorItem) {
 		
+		// Clear all previous operator entries with this machineid
+		operatorService.removeMachineIdFromAllOperators(operatorItem.getMachineid());
+		
 		return repository.save(operatorItem);
 		
 	}
@@ -45,7 +52,13 @@ public class OperatorResource {
 	@DeleteMapping("/operator/v1/{id}")
 	public void delteOperator(@PathVariable String id) {
 		
-		repository.deleteById(Long.parseLong(id));
+		repository.deleteById(Long.parseLong(id));		
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/operatorForDay/v1/{countDate}/{machineId}")
+	public OperatorItem getOperatorForDay(@PathVariable String countDate,@PathVariable String machineId) {
+		return operatorService.findOperatorForDay(countDate, Long.parseLong(machineId));
 		
 	}
 

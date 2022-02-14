@@ -7,6 +7,7 @@ public class ItemDetailView {
 	private java.sql.Date countdate;
 	private java.sql.Time counttime;
 	private int countamount;
+	private String operatorName;
 	
 	public long getId() {
 		return id;
@@ -44,7 +45,18 @@ public class ItemDetailView {
 	public void setCountamount(int countamount) {
 		this.countamount = countamount;
 	}
+	public String getOperatorName() {
+		return operatorName;
+	}
+	public void setOperatorName(String operatorName) {
+		this.operatorName = operatorName;
+	}
 	
-	
+	@Override
+	public String toString() {
+		return "ItemDetailView [id=" + id + ", machineid=" + machineid + ", machinename=" + machinename + ", countdate="
+				+ countdate + ", counttime=" + counttime + ", countamount=" + countamount + ", operatorName="
+				+ operatorName + "]";
+	}	
 
 }

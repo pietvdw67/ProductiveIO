@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.infinity.ProductiveIO.dailyDetail.repository.DailyDetailRepository;
 import com.infinity.ProductiveIO.dailyHistory.repository.DailyHistoryRepository;
 import com.infinity.ProductiveIO.machineDetail.repository.MachineDetailRepository;
+import com.infinity.ProductiveIO.operator.repository.OperatorRepository;
 import com.infinity.ProductiveIO.scedule.model.RepositoryInstance;
 import com.infinity.ProductiveIO.scedule.repository.ScheduleRepository;
 
@@ -35,6 +36,9 @@ public class SchedulingCommandLineRunner implements CommandLineRunner {
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	OperatorRepository operatorRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -45,6 +49,7 @@ public class SchedulingCommandLineRunner implements CommandLineRunner {
 		RepositoryInstance.getInstance().setDailyHistoryRepository(dailyHistoryRepository);
 		RepositoryInstance.getInstance().setMachineDetailRepository(machineDetailRepository);
 		RepositoryInstance.getInstance().setJdbcTemplate(jdbcTemplate);
+		RepositoryInstance.getInstance().setOperatorRepository(operatorRepository);
 		
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 		executor.scheduleAtFixedRate(new ScheduleRunner(), 0, 30,TimeUnit.MINUTES);

@@ -20,47 +20,48 @@ import com.infinity.ProductiveIO.totalDashboard.model.TotalDashboardItem;
 
 @Service
 public class TotalDashboardService {
-	
+
 	@Autowired
 	DailyDetailRepository dailyDetailRepository;
-	
+
 	@Autowired
 	MachineDetailService machineDetailService;
-	
+
 	@Autowired
 	OperatorRepository operatorRepository;
-	
+
 	@Autowired
 	TotalDashboardJDBC jdbc;
-	
-	public List<TotalDashboardItem> getTotalDashboard(){
-		
+
+	public List<TotalDashboardItem> getTotalDashboard() {
+
 		List<TotalDashboardItem> totalDashboardItems = new ArrayList<>();
-		List<ItemDetail> itemTotals = dailyDetailRepository.findTotalPerDay(new java.sql.Date(System.currentTimeMillis()));
-		
-		Map<Long,MachineDetail> machineDetailsMap = machineDetailService.getMachineDetailsMap();
+		List<ItemDetail> itemTotals = dailyDetailRepository
+				.findTotalPerDay(new java.sql.Date(System.currentTimeMillis()));
+
+		Map<Long, MachineDetail> machineDetailsMap = machineDetailService.getMachineDetailsMap();
 		List<OperatorItem> operatorsList = operatorRepository.findAll();
-		
+
 		for (ItemDetail itemDetail : itemTotals) {
 			TotalDashboardItem totalDashboardItem = new TotalDashboardItem();
 			totalDashboardItem.setId(itemDetail.getId());
 			totalDashboardItem.setTotalForDay(itemDetail.getCountamount());
-			totalDashboardItem.setLastUpdate(itemDetail.getCounttime());			
-			
+			totalDashboardItem.setLastUpdate(itemDetail.getCounttime());
+
 			if (machineDetailsMap.containsKey(itemDetail.getId())) {
-				
+
 				if (Objects.nonNull(machineDetailsMap.get(itemDetail.getId()).getName())) {
 					totalDashboardItem.setMachineName(machineDetailsMap.get(itemDetail.getId()).getName());
 				} else {
 					totalDashboardItem.setMachineName(String.valueOf(itemDetail.getId()));
 				}
-				
+
 				if (Objects.nonNull(machineDetailsMap.get(itemDetail.getId()).getAverageval())) {
 					totalDashboardItem.setAverage(machineDetailsMap.get(itemDetail.getId()).getAverageval());
 				} else {
 					totalDashboardItem.setAverage(0);
 				}
-				
+
 				if (Objects.nonNull(machineDetailsMap.get(itemDetail.getId()).getMarginval())) {
 					totalDashboardItem.setMargin(machineDetailsMap.get(itemDetail.getId()).getMarginval());
 				} else {
@@ -72,30 +73,38 @@ public class TotalDashboardService {
 				totalDashboardItem.setAverage(0);
 				totalDashboardItem.setMargin(0);
 			}
-			
+
 			int lastUploadAmount = jdbc.lastUploadAmount(itemDetail.getId());
 			totalDashboardItem.setLastUpdateAmount(lastUploadAmount);
-			
 
 			if (totalDashboardItem.getAverage() > 0) {
-				totalDashboardItem.setProductionPersentage((int) totalDashboardItem.getLastUpdateAmount() * 100 / totalDashboardItem.getAverage());
+				totalDashboardItem.setProductionPersentage(
+						(int) totalDashboardItem.getLastUpdateAmount() * 100 / totalDashboardItem.getAverage());
 			} else {
 				totalDashboardItem.setProductionPersentage(0);
 			}
-			
-			Optional<OperatorItem> operatorItemOptional = operatorsList.stream().filter(operator -> operator.getMachineid() == itemDetail.getId()).findFirst();
+
+			Optional<OperatorItem> operatorItemOptional = operatorsList.stream().filter(operator -> {
+				if (Objects.isNull(operator.getMachineid()))
+					return false;
+				if (operator.getMachineid() == itemDetail.getId())
+					return true;
+
+				return false;
+
+			}).findFirst();
 			if (operatorItemOptional.isPresent()) {
 				totalDashboardItem.setOperatorName(operatorItemOptional.get().getOperatorname());
 			} else {
 				totalDashboardItem.setOperatorName("Not Set");
 			}
-			
+
 			totalDashboardItems.add(totalDashboardItem);
-			
-			totalDashboardItems.sort( (item1,item2) -> item1.getProductionPersentage() - item2.getProductionPersentage() );
+
+			totalDashboardItems
+					.sort((item1, item2) -> item1.getProductionPersentage() - item2.getProductionPersentage());
 		}
-		
-		
+
 		return totalDashboardItems;
 	}
 

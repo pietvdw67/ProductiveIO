@@ -59,12 +59,15 @@ public class MachineDetail {
 	public void setNote(Long note) {
 		this.note = note;
 	}
+	
 	@Override
 	public String toString() {
 		return "MachineDetail [id=" + id + ", name=" + name + ", averageval=" + averageval + ", marginval=" + marginval
-				+ ", goalamt=" + goalamt + ", uploadmin=" + uploadmin + ", operator=" + operator + ", note=" + note
-				+ "]";
+				+ ", goalamt=" + goalamt + ", uploadmin=" + uploadmin + ", note=" + note + "]";
 	}
+	
+	
+
 	
 	
 

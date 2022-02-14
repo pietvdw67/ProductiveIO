@@ -18,6 +18,7 @@ public class DailyDetailReportService {
 		List<ReportColumns> reportColumns = new ArrayList<>();
 		
 		reportColumns.add(new ReportColumns("Machine Name",8000,"machinename",ReportColumns.CellType.STRING));
+		reportColumns.add(new ReportColumns("Operator", "operatorName"));
 		reportColumns.add(new ReportColumns("Date","countdate",ReportColumns.CellType.DATE));
 		reportColumns.add(new ReportColumns("Time","counttime",ReportColumns.CellType.TIME));		
 		reportColumns.add(new ReportColumns("Count","countamount"));

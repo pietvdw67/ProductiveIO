@@ -19,6 +19,7 @@ public class DailyHistoryReportService {
 		List<ReportColumns> reportColumns = new ArrayList<>();
 		
 		reportColumns.add(new ReportColumns("Machine Name",8000,"machinename",ReportColumns.CellType.STRING));
+		reportColumns.add(new ReportColumns("Operator",8000,"operatorname",ReportColumns.CellType.STRING));
 		reportColumns.add(new ReportColumns("Date","countdate",ReportColumns.CellType.DATE));		
 		reportColumns.add(new ReportColumns("Count","countamount"));
 		reportBuilder.setReportColumns(reportColumns);

@@ -14,6 +14,8 @@ public class HistoryItem {
 	private int machineid;
 	private java.sql.Date countdate;
 	private int countamount;
+	private Long operatorid;
+	private Long noteid;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)	
@@ -41,5 +43,23 @@ public class HistoryItem {
 	public void setCountamount(int countamount) {
 		this.countamount = countamount;
 	}
+	public Long getOperatorid() {
+		return operatorid;
+	}
+	public void setOperatorid(Long operatorid) {
+		this.operatorid = operatorid;
+	}
+	public Long getNoteid() {
+		return noteid;
+	}
+	public void setNoteid(Long noteid) {
+		this.noteid = noteid;
+	}
+	
+	@Override
+	public String toString() {
+		return "HistoryItem [id=" + id + ", machineid=" + machineid + ", countdate=" + countdate + ", countamount="
+				+ countamount + ", operatorid=" + operatorid + ", noteid=" + noteid + "]";
+	}	
 
 }
