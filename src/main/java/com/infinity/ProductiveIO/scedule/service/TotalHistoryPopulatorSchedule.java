@@ -5,6 +5,7 @@ import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -40,7 +41,10 @@ public class TotalHistoryPopulatorSchedule implements Runnable {
 			historyItem.setCountdate(itemDetail.getCountdate());
 			historyItem.setCountamount(itemDetail.getCountamount());
 			
-			Optional<OperatorItem> operatorOptional = operatorsList.stream().filter(operatorItem -> operatorItem.getMachineid() == itemDetail.getMachineid()).findFirst();
+			Optional<OperatorItem> operatorOptional = operatorsList.stream()
+					.filter(operatorItem -> Objects.nonNull(operatorItem.getMachineid()))
+					.filter(operatorItem -> operatorItem.getMachineid() == itemDetail.getMachineid())
+					.findFirst();
 			if (operatorOptional.isPresent()) {
 				historyItem.setOperatorid(operatorOptional.get().getId());
 			}
