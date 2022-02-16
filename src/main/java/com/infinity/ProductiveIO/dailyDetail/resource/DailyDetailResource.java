@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.infinity.ProductiveIO.dailyDetail.dto.DetailJDBC;
 import com.infinity.ProductiveIO.dailyDetail.repository.DailyDetailRepository;
 import com.infinity.ProductiveIO.dailyDetail.service.DailyDetailReportService;
 import com.infinity.ProductiveIO.dailyDetail.service.DetailService;
@@ -31,6 +32,9 @@ public class DailyDetailResource {
 	
 	@Autowired
 	DailyDetailRepository repository;
+	
+	@Autowired
+	DetailJDBC detailJDBC;
 	
 	@Autowired
 	DetailService detailService;
@@ -76,6 +80,12 @@ public class DailyDetailResource {
 	private byte[] contentOf(String fileName) throws Exception {		
 
 		return Files.readAllBytes(Paths.get(fileName));		
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/dailydetail/currenttotal/v1/{countdate}/{machineid}")
+	public long getDailyTotalForMachine(@PathVariable String countdate,@PathVariable String machineid) throws Exception {
+		return detailJDBC.getTotalDetailForMachineForDay(Long.parseLong(machineid), countdate);
 	}
 
 }
