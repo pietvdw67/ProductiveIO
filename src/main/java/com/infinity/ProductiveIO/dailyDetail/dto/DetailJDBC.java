@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.infinity.ProductiveIO.util.GeneralUtils;
+
 @Component
 public class DetailJDBC {
 	
@@ -15,6 +17,10 @@ public class DetailJDBC {
 	
 	public long getTotalDetailForMachineForDay(long machineId,String detailDateDBFormatted){
 		List<Integer> returnValuelist = new ArrayList<>();
+		
+		if (detailDateDBFormatted.equalsIgnoreCase("today")) {
+			detailDateDBFormatted = GeneralUtils.dateGetTodayDBFormatted(); 
+		}
 				
 		String sql = "select sum(countamount) from dailydetail where machineid = " + machineId + " and countdate = '" + detailDateDBFormatted + "'";
 		jdbcTemplate.query(sql, (rs) -> {
