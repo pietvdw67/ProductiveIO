@@ -86,6 +86,11 @@ public class TotalDashboardService {
 			
 			int currentAverage = jdbc.currentAverage(itemDetail.getId());
 			totalDashboardItem.setCurrentAverage(currentAverage);
+			
+			int amountInactiveMinutes = jdbc.amountInactive(itemDetail.getId());
+			int uploadMinute = jdbc.uploadMinute(itemDetail.getId());
+			int inactiveMinutes = amountInactiveMinutes * uploadMinute;
+			totalDashboardItem.setInativeMinutes(inactiveMinutes);					
 
 			Optional<OperatorItem> operatorItemOptional = operatorsList.stream().filter(operator -> {
 				if (Objects.isNull(operator.getMachineid()))

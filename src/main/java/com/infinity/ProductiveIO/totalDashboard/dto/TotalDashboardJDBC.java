@@ -47,6 +47,38 @@ public class TotalDashboardJDBC {
 		}
 	}
 	
+	public int amountInactive(long machineId){
+		List<Integer> returnValuelist = new ArrayList<>();
+				
+		String sql = "select count(1) from dailydetail where machineid = " + machineId + " and countdate = '" + GeneralUtils.dateGetTodayDBFormatted() + "' and countamount = 0";
+		jdbcTemplate.query(sql, (rs) -> {
+			returnValuelist.add(rs.getInt(1));
+		});
+		
+		
+		if (returnValuelist.size()==1) {
+			return returnValuelist.get(0);
+		} else {
+			return 0;
+		}
+	}
+	
+	public int uploadMinute(long machineId){
+		List<Integer> returnValuelist = new ArrayList<>();
+				
+		String sql = "select uploadmin from machinedetail where id = " + machineId;
+		jdbcTemplate.query(sql, (rs) -> {
+			returnValuelist.add(rs.getInt(1));
+		});
+		
+		
+		if (returnValuelist.size()==1) {
+			return returnValuelist.get(0);
+		} else {
+			return 0;
+		}
+	}
+	
 	
 	
 
