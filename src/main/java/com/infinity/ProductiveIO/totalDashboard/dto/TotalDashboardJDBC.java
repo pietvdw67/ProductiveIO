@@ -31,6 +31,22 @@ public class TotalDashboardJDBC {
 		}
 	}
 	
+	public int currentAverage(long machineId){
+		List<Integer> returnValuelist = new ArrayList<>();
+				
+		String sql = "select avg(countamount) from dailydetail where machineid = " + machineId + " and countdate = '" + GeneralUtils.dateGetTodayDBFormatted() + "'";
+		jdbcTemplate.query(sql, (rs) -> {
+			returnValuelist.add(rs.getInt(1));
+		});
+		
+		
+		if (returnValuelist.size()==1) {
+			return returnValuelist.get(0);
+		} else {
+			return 0;
+		}
+	}
+	
 	
 	
 

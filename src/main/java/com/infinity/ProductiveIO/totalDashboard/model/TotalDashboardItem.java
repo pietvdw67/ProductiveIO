@@ -8,6 +8,7 @@ public class TotalDashboardItem {
 	private int totalForDay;
 	private int lastUpdateAmount;
 	private int average;
+	private int currentAverage;
 	private int margin;
 	private int productionPersentage;
 	private String operatorName;
@@ -65,13 +66,21 @@ public class TotalDashboardItem {
 	}
 	public void setOperatorName(String operatorName) {
 		this.operatorName = operatorName;
+	}	
+	public int getCurrentAverage() {
+		return currentAverage;
+	}
+	public void setCurrentAverage(int currentAverage) {
+		this.currentAverage = currentAverage;
 	}
 	
 	@Override
 	public String toString() {
 		return "TotalDashboardItem [id=" + id + ", machineName=" + machineName + ", lastUpdate=" + lastUpdate
 				+ ", totalForDay=" + totalForDay + ", lastUpdateAmount=" + lastUpdateAmount + ", average=" + average
-				+ ", margin=" + margin + ", productionPersentage=" + productionPersentage + ", operatorName="
-				+ operatorName + "]";
+				+ ", currentAverage=" + currentAverage + ", margin=" + margin + ", productionPersentage="
+				+ productionPersentage + ", operatorName=" + operatorName + "]";
 	}
+	
+
 }

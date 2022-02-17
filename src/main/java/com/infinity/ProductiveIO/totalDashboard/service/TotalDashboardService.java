@@ -83,6 +83,9 @@ public class TotalDashboardService {
 			} else {
 				totalDashboardItem.setProductionPersentage(0);
 			}
+			
+			int currentAverage = jdbc.currentAverage(itemDetail.getId());
+			totalDashboardItem.setCurrentAverage(currentAverage);
 
 			Optional<OperatorItem> operatorItemOptional = operatorsList.stream().filter(operator -> {
 				if (Objects.isNull(operator.getMachineid()))
