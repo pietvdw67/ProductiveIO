@@ -49,6 +49,17 @@ public class TotalHistoryPopulatorSchedule implements Runnable {
 				historyItem.setOperatorid(operatorOptional.get().getId());
 			}
 			
+			// update note
+			Optional<MachineDetail> machineDetailOptional = RepositoryInstance.getInstance().getMachineDetailRepository().findById(Long.parseLong(String.valueOf(itemDetail.getMachineid())));
+			if (machineDetailOptional.isPresent()) {
+				if (Objects.nonNull(machineDetailOptional.get().getNote()) && machineDetailOptional.get().getNote().length() > 0) {
+					historyItem.setNote(machineDetailOptional.get().getNote());
+					
+					machineDetailOptional.get().setNote("");
+					RepositoryInstance.getInstance().getMachineDetailRepository().save(machineDetailOptional.get());
+				}
+			}
+			
 			RepositoryInstance.getInstance().getDailyHistoryRepository().save(historyItem);			
 		});
 		

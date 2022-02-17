@@ -43,8 +43,7 @@ public class HistoryService {
 			historyItemView.setMachineid(historyItems.get(i).getMachineid());		
 			historyItemView.setCountdate(historyItems.get(i).getCountdate());
 			historyItemView.setCountamount(historyItems.get(i).getCountamount());
-			
-			logger.info("************ -> " + historyItems.get(i).toString());
+			historyItemView.setNote(historyItems.get(i).getNote());
 			
 			if (machineNames.containsKey(Long.parseLong(String.valueOf(historyItems.get(i).getMachineid())))) {
 				historyItemView.setMachinename(machineNames.get(Long.parseLong(String.valueOf(historyItems.get(i).getMachineid()))));

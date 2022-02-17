@@ -86,12 +86,18 @@ public class ReportBuilder {
 					Field field = clazz.getDeclaredField(objectValueName);
 					field.setAccessible(true);
 					cellValue = field.get(value);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 								
 				Cell cell = row.createCell(index);
-				cell.setCellValue(String.valueOf(cellValue));
+				if (String.valueOf(cellValue).equalsIgnoreCase("null")) {
+					cell.setCellValue("");
+				} else {
+					cell.setCellValue(String.valueOf(cellValue));	
+				}
+				
 				
 				if (reportColumns.get(index).getCellType() == CellType.STRING) {
 					cell.setCellStyle(stringStyle());					

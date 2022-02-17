@@ -63,23 +63,5 @@ public class TotalDashboardJDBC {
 		}
 	}
 	
-	public int uploadMinute(long machineId){
-		List<Integer> returnValuelist = new ArrayList<>();
-				
-		String sql = "select uploadmin from machinedetail where id = " + machineId;
-		jdbcTemplate.query(sql, (rs) -> {
-			returnValuelist.add(rs.getInt(1));
-		});
-		
-		
-		if (returnValuelist.size()==1) {
-			return returnValuelist.get(0);
-		} else {
-			return 0;
-		}
-	}
-	
-	
-	
 
 }

@@ -22,6 +22,7 @@ public class DailyHistoryReportService {
 		reportColumns.add(new ReportColumns("Operator",8000,"operatorname",ReportColumns.CellType.STRING));
 		reportColumns.add(new ReportColumns("Date","countdate",ReportColumns.CellType.DATE));		
 		reportColumns.add(new ReportColumns("Count","countamount"));
+		reportColumns.add(new ReportColumns("Note",10000,"note",ReportColumns.CellType.STRING));
 		reportBuilder.setReportColumns(reportColumns);
 		reportBuilder.setValues(historyItemsView);
 		

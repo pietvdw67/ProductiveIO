@@ -43,7 +43,10 @@ public class TotalDashboardService {
 		List<OperatorItem> operatorsList = operatorRepository.findAll();
 
 		for (ItemDetail itemDetail : itemTotals) {
+			//ItemDetail itemDetail;
 			TotalDashboardItem totalDashboardItem = new TotalDashboardItem();
+			int uploadMinute = 0;
+			
 			totalDashboardItem.setId(itemDetail.getId());
 			totalDashboardItem.setTotalForDay(itemDetail.getCountamount());
 			totalDashboardItem.setLastUpdate(itemDetail.getCounttime());
@@ -67,6 +70,14 @@ public class TotalDashboardService {
 				} else {
 					totalDashboardItem.setMargin(0);
 				}
+				if (Objects.nonNull(machineDetailsMap.get(itemDetail.getId()).getUploadmin())) {
+					uploadMinute = machineDetailsMap.get(itemDetail.getId()).getUploadmin();
+				}				
+				if (Objects.nonNull(machineDetailsMap.get(itemDetail.getId()).getNote())) {
+					totalDashboardItem.setNote(machineDetailsMap.get(itemDetail.getId()).getNote());
+				} else {
+					totalDashboardItem.setNote("");
+				}
 
 			} else {
 				totalDashboardItem.setMachineName(String.valueOf(itemDetail.getId()));
@@ -87,8 +98,7 @@ public class TotalDashboardService {
 			int currentAverage = jdbc.currentAverage(itemDetail.getId());
 			totalDashboardItem.setCurrentAverage(currentAverage);
 			
-			int amountInactiveMinutes = jdbc.amountInactive(itemDetail.getId());
-			int uploadMinute = jdbc.uploadMinute(itemDetail.getId());
+			int amountInactiveMinutes = jdbc.amountInactive(itemDetail.getId());			
 			int inactiveMinutes = amountInactiveMinutes * uploadMinute;
 			totalDashboardItem.setInativeMinutes(inactiveMinutes);					
 
