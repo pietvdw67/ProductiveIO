@@ -1,6 +1,5 @@
 package com.infinity.ProductiveIO.scedule.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.infinity.ProductiveIO.dailyDetail.repository.DailyDetailRepository;
