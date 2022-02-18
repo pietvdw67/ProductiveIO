@@ -15,6 +15,9 @@ public class HistoryItem {
 	private java.sql.Date countdate;
 	private int countamount;
 	private Long operatorid;
+	private int average;
+	private int inactive;
+	private int offline;
 	private String note;
 	
 	@Id
@@ -54,12 +57,31 @@ public class HistoryItem {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}	
+	public int getAverage() {
+		return average;
+	}
+	public void setAverage(int average) {
+		this.average = average;
+	}
+	public int getInactive() {
+		return inactive;
+	}
+	public void setInactive(int inactive) {
+		this.inactive = inactive;
+	}
+	public int getOffline() {
+		return offline;
+	}
+	public void setOffline(int offline) {
+		this.offline = offline;
 	}
 	
 	@Override
 	public String toString() {
 		return "HistoryItem [id=" + id + ", machineid=" + machineid + ", countdate=" + countdate + ", countamount="
-				+ countamount + ", operatorid=" + operatorid + ", note=" + note + "]";
+				+ countamount + ", operatorid=" + operatorid + ", average=" + average + ", inactive=" + inactive
+				+ ", offline=" + offline + ", note=" + note + "]";
 	}
 
 }

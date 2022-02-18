@@ -14,7 +14,7 @@ public class MachineEmulateRunnable  implements Runnable {
 	
 	Logger logger = Logger.getLogger(MachineEmulateRunnable.class.toString());	
 	
-	private static final int INCREMENT_MINUTE = 1;
+	private static final int INCREMENT_MINUTE = 5;
 	private static final int MACHINE_ID_COUNT = 5;
 	
 	@Override
@@ -30,7 +30,13 @@ public class MachineEmulateRunnable  implements Runnable {
 				
 				ItemDetail itemDetail = new ItemDetail();
 				itemDetail.setMachineid(rep+1);
-				itemDetail.setCountamount(random.nextInt(100));
+				
+				int countAmountRandom = random.nextInt(20);
+				if (countAmountRandom <= 5) {
+					countAmountRandom = 0;
+				}
+				
+				itemDetail.setCountamount(countAmountRandom);
 				itemDetail.setCountdate(new java.sql.Date(time.toInstant(ZoneOffset.ofHours(2)).toEpochMilli()));
 				itemDetail.setCounttime(new java.sql.Time(time.toInstant(ZoneOffset.ofHours(2)).toEpochMilli()));
 				

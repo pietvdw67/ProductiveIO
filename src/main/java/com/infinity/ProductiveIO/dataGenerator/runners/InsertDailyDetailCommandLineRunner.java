@@ -31,10 +31,12 @@ public class InsertDailyDetailCommandLineRunner implements CommandLineRunner {
 	
 	private static final boolean DO_RUN = false;
 	
-	private static final String DATA_START_TIME = "17/01/2022 06:00";
-	private static final String DATA_END_TIME = "17/01/2022 18:00";
+	private static final String DATA_START_TIME = "17/02/2022 08:00";
+	private static final String DATA_END_TIME = "17/02/2022 13:00";
 	private static final int MACHINE_ID_COUNT = 5;
 	private static final int INCREMENT_MINUTE = 5;
+	private static final int MAX_RANDOM = 20;
+	private static final int RANDON_TO_ZERO_AMOUNT = 5;
 	
 	private Map<Integer,Integer> dailyTotalMap;
 	
@@ -61,7 +63,13 @@ public class InsertDailyDetailCommandLineRunner implements CommandLineRunner {
 				}
 				ItemDetail itemDetail = new ItemDetail();
 				itemDetail.setMachineid(rep+1);
-				itemDetail.setCountamount(random.nextInt(100));
+				
+				int randomValue = random.nextInt(MAX_RANDOM);
+				if (randomValue <= RANDON_TO_ZERO_AMOUNT) {
+					randomValue = 0;
+				}				
+				
+				itemDetail.setCountamount(randomValue);
 				itemDetail.setCountdate(new java.sql.Date(time.toInstant(ZoneOffset.ofHours(2)).toEpochMilli()));
 				itemDetail.setCounttime(new java.sql.Time(time.toInstant(ZoneOffset.ofHours(2)).toEpochMilli()));
 				

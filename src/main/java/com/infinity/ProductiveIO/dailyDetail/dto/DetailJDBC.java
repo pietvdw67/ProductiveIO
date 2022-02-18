@@ -1,7 +1,9 @@
 package com.infinity.ProductiveIO.dailyDetail.dto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,5 +36,31 @@ public class DetailJDBC {
 			return 0;
 		}
 	}
+	
+	public Map<Long,Integer> getInactiveMinutesCountByDay(String dateDBFormatted){
+		Map<Long,Integer> returnMap = new HashMap<>();
+		
+		String sql = "select machineid,count(1) from dailydetail where countdate = '" + dateDBFormatted +"' and countamount = 0 group by machineid";
+		jdbcTemplate.query(sql, (rs) -> {
+			returnMap.put(rs.getLong(1),rs.getInt(2));
+		});
+		
+		return returnMap;		
+	}
+	
+	public Map<Long,Integer> getActiveMinutesCountByDay(String dateDBFormatted){
+		Map<Long,Integer> returnMap = new HashMap<>();
+		
+		String sql = "select machineid,count(1) from dailydetail where countdate = '" + dateDBFormatted +"' and countamount > 0 group by machineid";
+		jdbcTemplate.query(sql, (rs) -> {
+			returnMap.put(rs.getLong(1),rs.getInt(2));
+		});
+		
+		return returnMap;		
+	}
+	
+	
+	
+	
 
 }
