@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,38 +21,33 @@ public class MachineDetailResource {
 	Logger logger = Logger.getLogger(MachineDetailResource.class.toString());
 	
 	@Autowired
-	MachineDetailRepository repository;
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+	MachineDetailRepository repository;	
+
 	@GetMapping("/machinedetails/v1")
 	public List<MachineDetail> getMachineDetails() {
 		return repository.findBySortedById();
-	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+	}	
+
 	@GetMapping("/machinedetails/v1/{id}")
 	public MachineDetail getMachineDetailsById(@PathVariable String id) {
 		
 		return repository.findById(Long.parseLong(id)).orElse(null);
-	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+	}	
+
 	@PostMapping("/machinedetails/v1")
 	public MachineDetail addMachineDetail(@RequestBody MachineDetail machineDetail) {
 		
 		return repository.save(machineDetail);
 		
-	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+	}	
+
 	@DeleteMapping("/machinedetails/v1/{id}")
 	public void delteMachineDetail(@PathVariable String id) {
 		
 		repository.deleteById(Long.parseLong(id));
 		
-	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+	}	
+
 	@GetMapping("/machinedetails/uploadmin/v1/{id}")
 	public int getMachineUploadMin(@PathVariable String id) {
 		

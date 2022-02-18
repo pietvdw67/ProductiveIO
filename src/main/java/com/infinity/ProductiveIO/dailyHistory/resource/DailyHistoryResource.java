@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,17 +31,15 @@ public class DailyHistoryResource {
 	DailyHistoryRepository repository;	
 	
 	@Autowired
-	HistoryService historyService;
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+	HistoryService historyService;	
+
 	@GetMapping("/dailyhistory/v1/{machineid}")
 	public List<HistoryItemView> getDailyHistoryPerMachine(@PathVariable String machineid) {
 		
 		List<HistoryItem> historyItems = repository.findByMachineId(Integer.parseInt(machineid));
 		return historyService.historyItemToHistoryItemView(historyItems);
-	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+	}	
+
 	@GetMapping("/dailyhistoryByDate/v1/{countdate}")
 	public List<HistoryItemView> getDailyHistoryByDate(@PathVariable String countdate) {
 		
@@ -58,9 +55,8 @@ public class DailyHistoryResource {
 		
 		List<HistoryItem> historyItems =  repository.findByDate(countdateFormatted);
 		return historyService.historyItemToHistoryItemView(historyItems);
-	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+	}	
+
 	@GetMapping("/dailyhistory/downloadReport/v1/{machineid}")
 	public void downloadInterimReportV2(HttpServletResponse res,@PathVariable String machineid) throws Exception {
 		
@@ -77,10 +73,8 @@ public class DailyHistoryResource {
 		res.setHeader("Content-Disposition", "attachment;filename=" + fileName);
 		res.getOutputStream().write(contentOf(fileName));
 		
-	}	
-	
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+	}		
+
 	@GetMapping("/dailyhistory/downloadByDateReport/v1/{countdate}")
 	public void downloadByDateReportV1(HttpServletResponse res,@PathVariable String countdate) throws Exception {
 		

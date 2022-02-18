@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,8 +37,7 @@ public class DailyDetailResource {
 	
 	@Autowired
 	DetailService detailService;
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@GetMapping("/dailydetail/v1/{countdate}/{machineid}")
 	public List<ItemDetailView> getDailyDetailsPerMachine(@PathVariable String countdate,@PathVariable String machineid) {
 		
@@ -57,8 +55,7 @@ public class DailyDetailResource {
 		
 		
 	}	
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@GetMapping("/dailydetail/downloadReport/v1/{countdate}/{machineid}")
 	public void downloadInterimReportc2(HttpServletResponse res,@PathVariable String countdate,@PathVariable String machineid) throws Exception {
 		
@@ -81,8 +78,7 @@ public class DailyDetailResource {
 
 		return Files.readAllBytes(Paths.get(fileName));		
 	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@GetMapping("/dailydetail/currenttotal/v1/{countdate}/{machineid}")
 	public long getDailyTotalForMachine(@PathVariable String countdate,@PathVariable String machineid) throws Exception {
 		return detailJDBC.getTotalDetailForMachineForDay(Long.parseLong(machineid), countdate);
