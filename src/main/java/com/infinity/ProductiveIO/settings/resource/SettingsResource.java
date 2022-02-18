@@ -26,6 +26,8 @@ public class SettingsResource {
 	
 	@PostMapping("/settings/settingsConfig/v1")
 	public void updateSettingsConfig(@RequestBody SettingsConfig settingsConfig) {
+		logger.info("receiving settingsconfig");
+		logger.info("received : " + settingsConfig.toString());
 		service.setSettingsConfig(settingsConfig);
 	}
 

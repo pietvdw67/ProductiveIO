@@ -9,6 +9,7 @@ public class AppSettings {
 
 	private AppSettings() {}
 	private static AppSettings instance = null;
+	private boolean hasLoaded = false;
 	
 	private Map<String,Settings> settingsMap = new HashMap<>();
 	
@@ -28,6 +29,15 @@ public class AppSettings {
 
 	protected void setSettingsMap(Map<String, Settings> settingsMap) {
 		this.settingsMap = settingsMap;
-	}	
+	}
+	public boolean isHasLoaded() {
+		return hasLoaded;
+	}
+
+	public void setHasLoaded(boolean hasLoaded) {
+		this.hasLoaded = hasLoaded;
+	}
+	
+	
 
 }

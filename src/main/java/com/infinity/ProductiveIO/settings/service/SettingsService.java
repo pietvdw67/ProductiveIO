@@ -1,5 +1,6 @@
 package com.infinity.ProductiveIO.settings.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -24,24 +25,14 @@ public class SettingsService {
 	@Autowired
 	SettingsRepository repository;
 	
-	private static SettingsService instance;
-	
 	private SettingsService() {}	
 		
 	Logger logger = Logger.getLogger(SettingsService.class.toString());
 	
-	public static SettingsService getInstance() {
-		if (instance == null) {
-			instance = new SettingsService();
-			
-			instance.loadSettings();
-		}
-		
-		return instance;
-	}
+
 	
 	private void loadSettings() {		
-		
+		AppSettings.getInstance().setSettingsMap(new HashMap<>());
 		List<Settings> settingsRetrieved = repository.findAll();
 		settingsRetrieved.forEach(setting -> {
 			AppSettings.getInstance().getSettingsMap().put(setting.getSettingkey(), setting);			
@@ -50,6 +41,10 @@ public class SettingsService {
 	}
 	
 	public String getSetting(String key) {
+		if (!AppSettings.getInstance().isHasLoaded()) {
+			loadSettings();
+			AppSettings.getInstance().setHasLoaded(true);
+		}
 		if (AppSettings.getInstance().getSettingsMap().containsKey(key)) {
 			return AppSettings.getInstance().getSettingsMap().get(key).getSettingvalue();
 		} else {
@@ -105,6 +100,8 @@ public class SettingsService {
 		setSetting(HOURS_FRIDAY, String.valueOf(config.getHoursFriday()));
 		setSetting(HOURS_SATURDAY, String.valueOf(config.getHoursSaturday()));
 		setSetting(HOURS_SUNDAY, String.valueOf(config.getHoursSunday()));
+		
+		loadSettings();
 	}
 
 }
