@@ -36,7 +36,7 @@ public class OperatorJDBC {
 				return operatorItemOptional.orElse( new OperatorItem());			}
 		} else {
 			List<OperatorItem> operators = operatorRepository.findOperatorByMachineId(machineId);
-			if (operators.size() >= 0) {
+			if (operators.size() > 0) {
 				return operators.get(0);
 			} else {
 				return new OperatorItem();

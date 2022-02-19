@@ -12,7 +12,7 @@ public class TotalDashboardItem {
 	private int margin;
 	private int productionPersentage;
 	private String operatorName;
-	private int inativeMinutes;
+	private double inativeHours;
 	private String note;
 	
 	public long getId() {
@@ -75,27 +75,25 @@ public class TotalDashboardItem {
 	public void setCurrentAverage(int currentAverage) {
 		this.currentAverage = currentAverage;
 	}	
-	public int getInativeMinutes() {
-		return inativeMinutes;
-	}
-	public void setInativeMinutes(int inativeMinutes) {
-		this.inativeMinutes = inativeMinutes;
-	}	
 	public String getNote() {
 		return note;
 	}
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
+	public double getInativeHours() {
+		return inativeHours;
+	}
+	public void setInativeHours(double inativeHours) {
+		this.inativeHours = inativeHours;
+	}
 	@Override
 	public String toString() {
 		return "TotalDashboardItem [id=" + id + ", machineName=" + machineName + ", lastUpdate=" + lastUpdate
 				+ ", totalForDay=" + totalForDay + ", lastUpdateAmount=" + lastUpdateAmount + ", average=" + average
 				+ ", currentAverage=" + currentAverage + ", margin=" + margin + ", productionPersentage="
-				+ productionPersentage + ", operatorName=" + operatorName + ", inativeMinutes=" + inativeMinutes
-				+ ", note=" + note + "]";
+				+ productionPersentage + ", operatorName=" + operatorName + ", inativeHours=" + inativeHours + ", note="
+				+ note + "]";
 	}
-
 
 }

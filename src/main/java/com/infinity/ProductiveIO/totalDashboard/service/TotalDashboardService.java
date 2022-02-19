@@ -1,5 +1,6 @@
 package com.infinity.ProductiveIO.totalDashboard.service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -100,7 +101,11 @@ public class TotalDashboardService {
 			
 			int amountInactiveMinutes = jdbc.amountInactive(itemDetail.getId());			
 			int inactiveMinutes = amountInactiveMinutes * uploadMinute;
-			totalDashboardItem.setInativeMinutes(inactiveMinutes);					
+			
+			DecimalFormat df = new DecimalFormat("0.##");
+			double value = (double) inactiveMinutes / 60;
+			String valueString = df.format(value);
+			totalDashboardItem.setInativeHours(Double.parseDouble(valueString.replace(",",".")));									
 
 			Optional<OperatorItem> operatorItemOptional = operatorsList.stream().filter(operator -> {
 				if (Objects.isNull(operator.getMachineid()))
