@@ -1,6 +1,7 @@
 package com.infinity.ProductiveIO.operator.resource;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,7 +39,9 @@ public class OperatorResource {
 	public OperatorItem addOperator(@RequestBody OperatorItem operatorItem) {
 		
 		// Clear all previous operator entries with this machineid
-		operatorService.removeMachineIdFromAllOperators(operatorItem.getMachineid());
+		if (Objects.nonNull(operatorItem) && Objects.nonNull(operatorItem.getMachineid())) {
+			operatorService.removeMachineIdFromAllOperators(operatorItem.getMachineid());
+		}
 		
 		return repository.save(operatorItem);
 		
