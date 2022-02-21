@@ -21,6 +21,7 @@ public class DailyHistoryReportService {
 		reportColumns.add(new ReportColumns("Machine Name",8000,"machinename",ReportColumns.CellType.STRING));
 		reportColumns.add(new ReportColumns("Operator",8000,"operatorname",ReportColumns.CellType.STRING));
 		reportColumns.add(new ReportColumns("Date","countdate",ReportColumns.CellType.DATE));	
+		reportColumns.add(new ReportColumns("Amount","countamount"));
 		reportColumns.add(new ReportColumns("Average","average"));	
 		reportColumns.add(new ReportColumns("Inactive","inactive"));
 		reportColumns.add(new ReportColumns("Offline","offline"));
